@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private static final String VIDEO_DIRECTORY = "/Chat";
     private myAdapter adapter;
-    private VideoView videoView;
     public  Uri passUri;
 
     @Override
@@ -48,19 +48,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        // Elementi Grafici-----------------------------------------
+        // Variables-----------------------------------------
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         Button video = findViewById(R.id.video);
         Button camera = findViewById(R.id.camera);
         Button send = findViewById(R.id.send);
-        videoView =findViewById(R.id.rec);
         final EditText editText = findViewById(R.id.editText);
-
-        // Media Controller----------------------------------------
-
 
 
         // Layout Manager------------------------------------------------
@@ -70,26 +65,24 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-
         // Adapter-----------------------------------------
 
-        if(dati.size()> 1){  /*verifica se le liste hanno piu di un elemento, in caso affermativo avvisa l'adattatore che ci sono piu dati*/
+        if(dati.size()> 1){
             adapter =  new myAdapter(dati, this);
             adapter.notifyDataSetChanged();
-            recyclerView.setAdapter(adapter);
             recyclerView.smoothScrollToPosition(dati.size());
-            recyclerView.setFocusable(dati.size());
-        }
+            recyclerView.setAdapter(adapter);
 
+        }
 
         else{
+            Collections.reverse(dati);
             adapter =  new myAdapter(dati,this);
             recyclerView.setAdapter(adapter);
-            recyclerView.smoothScrollToPosition(dati.size());
         }
 
 
-        // Listener Click Video----------------------------------------------
+        // Click Listener Video button----------------------------------------------
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Listener Click Camera----------------------------------------------
+        // Click Listener Camera button----------------------------------------------
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Listener Click Invio------------------------------------------------
+        // Click Listener Send button------------------------------------------------
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
                 }catch (Throwable o){Log.i("CAM","User aborted action");}
             case 1:
                 try {
-                Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-                dati.add(new ModelloDati(1,bitmap));
+                    Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                    dati.add(new ModelloDati(1,bitmap));
                 }catch(Throwable o){
-                Log.i("CAM","User aborted action");
+                    Log.i("CAM","User aborted action");
                 }
         }
 

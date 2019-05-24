@@ -10,68 +10,57 @@
 
     <android.support.v7.widget.RecyclerView
         android:background="@drawable/sfondo"
-        android:foregroundGravity="center"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        app:stackFromEnd="true"/>
+        />
 
 
-    <EditText
-        android:id="@+id/editText"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginEnd="160dp"
-        android:background="#0003A9F4"
-        android:hint="Scrivi"
-        android:padding="20dp"
+        android:layout_height="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_gravity="center_vertical"
+            android:id="@+id/editText"
+            android:layout_width="255dp"
+            android:layout_height="55dp"
+            android:background="#0003A9F4"
+            android:hint="Scrivi"
+            android:padding="10dp" />
 
 
-    <Button
-        android:id="@+id/send"
-        android:layout_width="55dp"
-        android:layout_height="64dp"
-        android:background="@drawable/send"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.0"/>
 
-    <Button
-        android:id="@+id/camera"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/camera"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
-        app:layout_constraintEnd_toStartOf="@+id/send"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/video"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/video"
-        app:layout_constraintEnd_toStartOf="@+id/camera"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        <Button
+            android:layout_gravity="center_vertical"
+            android:id="@+id/camera"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/camera"
+          />
+
+        <Button
+            android:layout_gravity="center_vertical"
+            android:id="@+id/video"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/video"
+            />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/send" />
+
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
