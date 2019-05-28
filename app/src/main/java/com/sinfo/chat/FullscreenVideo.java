@@ -77,6 +77,7 @@ public class FullscreenVideo extends AppCompatActivity {
             videoView.requestFocus();
             videoView.start();
             videoView.setMediaController(mediaController);
+            mediaController.show(3);
             videoView.setOnTouchListener(new View.OnTouchListener() {
                 boolean flag = true;
                 @Override
@@ -91,7 +92,7 @@ public class FullscreenVideo extends AppCompatActivity {
                                 mediaController.show(0);
                                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                             }
-                            flag = !flag;
+                            flag = false;
                             return true;
 
                     }
