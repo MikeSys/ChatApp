@@ -14,9 +14,30 @@
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:elevation="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:background="#46000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/close_video"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/back"/>
+
+    </android.support.v7.widget.Toolbar>
+
+
     <LinearLayout
         android:id="@+id/fullscreen_content_controls"
-        style="?metaButtonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom|center_horizontal"

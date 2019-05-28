@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:windowSoftInputMode="adjustResize">
+        android:windowSoftInputMode="adjustResize"
+        android:configChanges="keyboardHidden|orientation">
         <activity
             android:name=".FullscreenVideo"
             android:configChanges="orientation|keyboardHidden|screenSize"

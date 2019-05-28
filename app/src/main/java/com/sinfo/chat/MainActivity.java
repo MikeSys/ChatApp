@@ -1,20 +1,26 @@
 package com.sinfo.chat;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -41,7 +47,11 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private static final String VIDEO_DIRECTORY = "/Chat";
     private myAdapter adapter;
+    private RecyclerView recyclerView;
     public  Uri passUri;
+    private Parcelable myRecyclerAdapterState = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         // Variables-----------------------------------------
 
-        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+         recyclerView = findViewById(R.id.recyclerView);
         Button video = findViewById(R.id.video);
         Button camera = findViewById(R.id.camera);
         Button send = findViewById(R.id.send);
@@ -61,25 +72,20 @@ public class MainActivity extends AppCompatActivity {
         // Layout Manager------------------------------------------------
 
         linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(itemAnimator);
+
 
 
         // Adapter-----------------------------------------
 
-        if(dati.size()> 1){
+            //adapter.notifyDataSetChanged();
             adapter =  new myAdapter(dati, this);
-            adapter.notifyDataSetChanged();
-            recyclerView.smoothScrollToPosition(dati.size());
             recyclerView.setAdapter(adapter);
 
-        }
 
-        else{
-            Collections.reverse(dati);
-            adapter =  new myAdapter(dati,this);
-            recyclerView.setAdapter(adapter);
-        }
 
 
         // Click Listener Video button----------------------------------------------
@@ -106,14 +112,31 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String string = editText.getText().toString();
                 dati.add(new ModelloDati(0,string));
+                adapter.notifyItemInserted(dati.size());
                 editText.getText().clear();
+                recyclerView.smoothScrollToPosition(dati.size());
                 closeKeyboard();
             }
         });
 
 
-
     }
+
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        myRecyclerAdapterState = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable("RECYCLER_STATE_KEY", myRecyclerAdapterState );
+    }
+
+     @Override
+     protected void onResume() {
+        super.onResume();
+         if (myRecyclerAdapterState != null)
+         { linearLayoutManager.onRestoreInstanceState(myRecyclerAdapterState);}
+    }
+
+
 
     private void closeKeyboard() {
         View view = getCurrentFocus();
@@ -122,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(),0);
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -133,17 +155,24 @@ public class MainActivity extends AppCompatActivity {
                     Uri contentURI = data.getData();
                     passUri = contentURI;
                     String recordedVideoPath = getPath(contentURI);
-                    Log.d("frrr", recordedVideoPath);
                     saveVideoToInternalStorage(recordedVideoPath);
                     dati.add(new ModelloDati(2, contentURI));
+                    adapter.notifyItemInserted(dati.size());
+                    recyclerView.smoothScrollToPosition(dati.size());
+
                 }catch (Throwable o){Log.i("CAM","User aborted action");}
             case 1:
                 try {
                     Bitmap bitmap = (Bitmap)data.getExtras().get("data");
                     dati.add(new ModelloDati(1,bitmap));
+                    adapter.notifyItemInserted(dati.size());
+                    recyclerView.smoothScrollToPosition(dati.size());
+
+
                 }catch(Throwable o){
                     Log.i("CAM","User aborted action");
                 }
+
         }
 
 
@@ -187,8 +216,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     public String getPath(Uri uri) {
         String[] projection = { MediaStore.Video.Media.DATA };
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
@@ -202,11 +229,6 @@ public class MainActivity extends AppCompatActivity {
         } else
             return null;
     }
-
-
-
-
-
 
 
 }

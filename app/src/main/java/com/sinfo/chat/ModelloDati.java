@@ -1,15 +1,16 @@
 package com.sinfo.chat;
 
+import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.util.ArrayList;
 
-public class ModelloDati {
+public class ModelloDati extends ViewModel {
     public int TYPE;
-    private String testo;
-    private Bitmap immagini;
-    private Uri uri;
+    public String testo;
+    public Bitmap immagini;
+    public Uri uri;
 
 
     public ModelloDati(int TYPE, Bitmap immagini) {
@@ -36,5 +37,22 @@ public class ModelloDati {
     }
     public Uri getUri() {
         return uri;
+    }
+
+
+    public void setTYPE(int TYPE) {
+        this.TYPE = TYPE;
+    }
+
+    public void setTesto(String testo) {
+        this.testo = testo;
+    }
+
+    public void setImmagini(Bitmap immagini) {
+        this.immagini = immagini;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
     }
 }
