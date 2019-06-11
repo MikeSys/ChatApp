@@ -2,9 +2,8 @@ package com.sinfo.chat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,10 +15,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
-
-import org.w3c.dom.Text;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -57,6 +53,8 @@ public class FullscreenVideo extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen_video);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         final Button button = findViewById(R.id.close_video);
+        final Runnable mRunnable;
+        final Handler mHandler=new Handler();
 
 
         setSupportActionBar(toolbar);
@@ -66,6 +64,13 @@ public class FullscreenVideo extends AppCompatActivity {
         TextView textView = findViewById(R.id.testo_full);
         VideoView videoView = findViewById(R.id.rec2);
         String string = getIntent().getStringExtra("TESTO");
+
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                toolbar.animate().translationY(-toolbar.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+            }
+        };
 
 
         try {
@@ -77,9 +82,16 @@ public class FullscreenVideo extends AppCompatActivity {
             videoView.requestFocus();
             videoView.start();
             videoView.setMediaController(mediaController);
-            mediaController.show(3);
+            mediaController.setBackgroundColor(getResources().getColor(R.color.transparent));
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    toolbar.animate().translationY(-toolbar.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
+                }
+            });
+            toolbar.animate().translationY(-toolbar.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
             videoView.setOnTouchListener(new View.OnTouchListener() {
-                boolean flag = true;
+                boolean flag = false;
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
@@ -89,15 +101,26 @@ public class FullscreenVideo extends AppCompatActivity {
                                 toolbar.animate().translationY(-toolbar.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
                             }
                             else {
-                                mediaController.show(0);
+                                mediaController.show(3000);
                                 toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+                                mHandler.postDelayed(mRunnable,3000);
+
                             }
-                            flag = false;
+                            flag = !flag;
                             return true;
 
                     }
 
                     return false;
+                }
+            });
+
+
+            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mediaController.show(0);
+                    toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
                 }
             });
             button.setOnClickListener(new View.OnClickListener() {

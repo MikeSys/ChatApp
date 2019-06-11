@@ -12,61 +12,161 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#DFDFDF"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:background="#0F0294A5"
+        android:descendantFocusability="blocksDescendants"
+        android:paddingBottom="55dp"
+        android:paddingHorizontal="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />           <!--RecyclerView-->
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/normal_bar"
+        android:layout_width="345dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="5dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:focusable="true"
+        android:orientation="horizontal"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:descendantFocusability="blocksDescendants"/>
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="#0003A9F4"
+                android:hint="Scrivi"
+                android:padding="10dp" />
 
 
-    <LinearLayout
-        android:focusable="true"
-        android:elevation="8dp"
-        android:id="@+id/linearLayout"
+            <ImageButton
+                android:padding="15dp"
+                android:id="@+id/camera"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ripple_effect"
+                android:src="@drawable/camera" />
+
+            <ImageButton
+                android:id="@+id/video"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="0.5dp"
+                android:background="@drawable/ripple_effect"
+                android:src="@drawable/video" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>               <!--Barra normale-->
+
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/bar_rec"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="5dp"
+        android:elevation="8dp"
+        android:focusable="true"
+        android:orientation="horizontal"
+        app:cardCornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:layout_gravity="center_vertical"
-            android:id="@+id/editText"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="55dp"
-            android:background="#0003A9F4"
-            android:hint="Scrivi"
-            android:padding="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal">
 
 
+            <Chronometer
+                android:id="@+id/cronometro"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
 
-        <Button
-            android:layout_gravity="center_vertical"
-            android:id="@+id/camera"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/camera"
-          />
+        </LinearLayout>
 
-        <Button
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="0.5dp"
-            android:id="@+id/video"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/video"
-            />
 
-        <Button
+    </android.support.v7.widget.CardView>               <!--Barra registrazione-->
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.996"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageButton
             android:id="@+id/send"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/send" />
+            android:layout_centerInParent="true"
+            android:background="@mipmap/send" />
 
+    </RelativeLayout>                                   <!--Bottone invio-->
 
-    </LinearLayout>
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/relativeLayout2"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.996"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageButton
+            android:id="@+id/record"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/rec" />
+
+    </RelativeLayout>                                   <!--Bottone registrazione-->
 
 
 </android.support.constraint.ConstraintLayout>

@@ -3,31 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:gravity="center_horizontal"
+    android:id="@+id/layout_selezione_testo"
     >
 
 
     <android.support.v7.widget.CardView
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#6D009688"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="8dp"
         android:focusable="true"
         >
 
-        <TextView
-            android:id="@+id/testo"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ciao!"
-            android:background="#08BBFF"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:paddingEnd="26dp"
+            android:background="#0294a5"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:paddingStart="26dp"
-            android:textColor="#fff"/>
+            >
+
+
+
+             <LinearLayout
+                 android:layout_gravity="center"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/testo"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:maxWidth="275dp"
+                     android:text="ciao!"
+                     android:textColor="#FFFFFF" />
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/ora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="9:00"
+                    android:textSize="10sp"
+                    android:textColor="#BDBDBD"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
 
     </android.support.v7.widget.CardView>
 
